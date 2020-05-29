@@ -99,7 +99,7 @@
     "react-app-rewired": "^2.1.5",
     "redux-mock-store": "^1.5.4"
   },
-  "homepage": "https://yoyo-gift-shop.herokuapp.com"
+  "homepage": "https://yoyo-gift-shop.herokuapp.com",
   "env": {
     "browser": true,
     "node": true,
