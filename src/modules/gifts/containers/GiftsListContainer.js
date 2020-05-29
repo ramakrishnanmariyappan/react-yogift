@@ -49,7 +49,6 @@ export class GiftsListContainer extends React.Component {
   };
 
   handleSortButtonClick = () => {
-    console.log('coming herre')
     const e = {
       target: {
         value: this.state.sortByValue

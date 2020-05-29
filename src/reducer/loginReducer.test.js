@@ -1,11 +1,12 @@
 import loginReducer from './loginReducer';
-import { LOGIN, LOGOUT, LOGIN_USER_DETAILS, OPEN_DIALOG } from "../actions/login-types";
+import { LOGIN, LOGOUT, LOGIN_USER_DETAILS, OPEN_DIALOG, CLOSE_ERROR, LOGIN_ERROR } from "../actions/login-types";
 import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
 let INITIAL_STATE = {
     loginStatus: false,
     detailsObject: '',
-    openDialog: false
+    openDialog: false,
+    errorData: false
 };
 configure({ adapter: new Adapter() });
 
@@ -41,6 +42,20 @@ describe('Login_Reducer', () => {
             payload: 'user2'
         }
         expect(loginReducer(INITIAL_STATE, loginUser).detailsObject).toEqual('user2');
+    });
+    it('should handle LOGIN_ERROR', () => {
+        const loginUser = {
+            type: LOGIN_ERROR,
+            payload: true
+        }
+        expect(loginReducer(INITIAL_STATE, loginUser).errorData).toEqual(true);
+    });
+    it('should handle CLOSE_ERROR', () => {
+        const loginUser = {
+            type: CLOSE_ERROR,
+            payload: false
+        }
+        expect(loginReducer(INITIAL_STATE, loginUser).errorData).toEqual(false);
     });
 
 });

@@ -81,8 +81,9 @@ describe('Header_Component', () => {
     });
     it('should call the handleLoginFunc method', () => {
         const instance = wrapper.instance();
+		wrapper.setProps({ isLoggedIn: false } );
         instance.forceUpdate();
-        const button = wrapper.find('WithStyles(Button)').at(5);
+        const button = wrapper.find('WithStyles(Button)').at(0);
         button.props().onClick();
     });
     it('should call the logOut method', () => {

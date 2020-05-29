@@ -97,10 +97,6 @@ describe('User_Actions', () => {
         const dispatch = jest.fn().mockImplementation();
         const response = updateUserBalance(user);
         await response(dispatch);
-        // expect(dispatch).toHaveBeenCalledWith({
-        //     type: LOGIN_USER_DETAILS,
-        //     payload: user
-        // });
     });
     it('should handle updateUserBalance action throw error', async () => {
         const errorMessage = 'Network Error';
@@ -123,10 +119,6 @@ describe('User_Actions', () => {
         const dispatch = jest.fn().mockImplementation();
         const response = updateTransact(user);
         await response(dispatch);
-        // expect(dispatch).toHaveBeenCalledWith({
-        //     type: LOGIN_USER_DETAILS,
-        //     payload: user
-        // });
     });
     it('should handle updateTransact action throw error', async () => {
         const errorMessage = 'Network Error';

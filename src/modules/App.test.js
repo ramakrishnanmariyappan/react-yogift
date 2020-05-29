@@ -11,27 +11,53 @@ import { create } from 'react-test-renderer';
 import { LocalizeProvider } from "react-localize-redux";
 import ErrorBoundary from "./common/components/errorBoundary";
 import thunk from 'redux-thunk';
+import { MemoryRouter } from 'react-router-dom';
 
 configure({ adapter: new Adapter() });
 jest.mock('./Styles.less', () => ({}))
-// jest.mock('./LazyComponent1', () => require('./Component1'));
-// jest.mock('./LazyComponent2', () => require('./Component2'));
+function Loading({ error }) {
+  if (error) {
+    return (
+      <div>
+    <h2 style={{
+      height: '40px',
+      background: '#b3d9f7',
+      color: 'white',
+      textAlign: 'center',
+      verticalAlign: 'middle',
+      paddingTop: '5px',
+      fontSize: '20px',
+      fontWeight: '500'
+    }}>
+      Oh nooess! Something went wrong. Try re-loading!
+      </h2>
+      </div>
+      )
+  } else {
+    return <LinearProgress color="secondary" />;
+  }
+}
 
 describe('App_Component', () => {
-    let store;
+    let store, wrapper;
     const mockStore = configureStore([thunk]);
     store = mockStore({ login: { loginStatus: true, detailsObject: 'user' } });
-    it('rendered lazily', async () => {
-        const root = create(
+	beforeEach(() => {
+		wrapper = shallow(
             <Provider store={store}>
                 <LocalizeProvider>
-                    <Suspense fallback={<div>loading...</div>}>
+                    <Suspense fallback={<Loading/>}>
+					<MemoryRouter initialEntries={[ '/giftCards' ]}>
                         <App />
+						</MemoryRouter>
                     </Suspense>
                 </LocalizeProvider>
-            </Provider>
+            </Provider>, {suspenseFallback: true}
         );
-
+	});
+    it('rendered lazily', async () => {
+        
+        console.log('wrapper', wrapper.debug());
         await GiftsListContainer;
         await ProfileContainers;
         await GiftShowContainer;
@@ -40,30 +66,9 @@ describe('App_Component', () => {
         await AddUpdateForm;
         await ErrorPage;
         await UsersList;
-
         // expect(root).toMatchSnapshot();
-    })
+    });
+	it('should call Loading', () => {
+		const loading = wrapper.find('Route').at(0);
+	});
 });
-// describe('Authendication Component', () => {
-//     let wrapper, store;
-//     beforeEach(() => {
-//         const initialState = {
-//             isLoggedIn: false,
-//             userDetails: 'admin'
-//         };
-//         const mockStore = configureStore();
-//         store = mockStore({ login: initialState });
-//         wrapper = shallow(
-//             <Provider store={store}>
-//                 <Router history={history}>
-//                     <App />
-//                 </Router>
-//             </Provider>
-//         );
-
-//     });
-//     it('should find the child component', () => {
-//         // console.log(wrapper)
-//         let instance1 = wrapper.dive().dive().dive().instance();
-//     });
-// })

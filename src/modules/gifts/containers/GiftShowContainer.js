@@ -120,7 +120,6 @@ export class GiftShowContainer extends Component {
         <CircularProgress style={{ marginLeft: "50%", marginTop: "10%" }} />
       );
     }
-    // console.log(typeof(cardPoints - balance_points))
     let points = isNaN(cardPoints - balance_points) ?
      'You need more points to gift this card' : 
      'You need '+(cardPoints - balance_points)+' more points to gift this card'

@@ -12,7 +12,7 @@
     "formik": "^1.5.7",
     "fs-extra": "^8.0.1",
     "history": "^4.9.0",
-    "loglevel-plugin-remote": "^0.6.8",
+    "loggly-jslogger": "^2.2.2",
     "react": "^16.12.0",
     "react-app-rewire-workbox": "^2.0.1",
     "react-dom": "^16.12.0",
@@ -40,7 +40,10 @@
       "!**/node_modules/**",
       "!<rootDir>/src/index.js",
       "!<rootDir>/src/registerServiceWorker.js",
-      "!<rootDir>/src/custom-sw.js"
+      "!<rootDir>/src/custom-sw.js",
+	  "!<rootDir>/src/store/index.js",
+	  "!<rootDir>/src/shared/consts/array-consts.js",
+	  "!<rootDir>/src/modules/common/utility/Random_rgba.js"
     ],
     "coverageReporters": [
       "text",

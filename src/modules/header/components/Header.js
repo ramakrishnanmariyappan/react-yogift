@@ -64,13 +64,12 @@ export class Header extends Component {
                 </span>
               </Button>
             </Typography>
-            {/* {this.props.isLoggedIn ? <Button color="inherit" onClick={this.addUpdateForm}>ADD UPDATE FORM</Button> : null} */}
-            {this.props.isLoggedIn ? (
+            {(this.props.isLoggedIn && !adminEmail.includes(this.props.userDetails.email)) ? (
               <Button className={Styles.headerButton} color="inherit" onClick={this.giftsReceived}>
                 GIFTS RECEIVED
               </Button>
             ) : null}
-            {this.props.isLoggedIn ? (
+            {(this.props.isLoggedIn && !adminEmail.includes(this.props.userDetails.email)) ? (
               <Button className={Styles.headerButton} color="inherit" onClick={this.giftsSend}>
                 GIFTS SENT
               </Button>

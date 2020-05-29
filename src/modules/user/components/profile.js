@@ -13,7 +13,6 @@ class Profile extends Component {
       picture,
       balance_points
     } = this.props.detailsObject;
-    console.log(email)
     return (
       <>
         <div className={Styles.profileHeader}>

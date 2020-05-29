@@ -27,7 +27,8 @@ describe('LoginFormik_Component', () => {
     let wrapper, store, useEffect;
     const props = {
         dialogClose: jest.fn(),
-        handleChange: jest.fn()
+        handleChange: jest.fn(),
+        errorData: jest.fn()
     }
     const mockStore = configureStore([thunk]);
     store = mockStore({});

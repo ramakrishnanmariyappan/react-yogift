@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import { LOGIN, LOGOUT, LOGIN_USER_DETAILS, OPEN_DIALOG } from "./login-types";
-import { login, logout, createUser, loginUser, openDialog, loginGoogleUser } from './login-index';
+import { LOGIN, LOGOUT, LOGIN_USER_DETAILS, OPEN_DIALOG, CLOSE_ERROR } from "./login-types";
+import { login, logout, createUser, loginUser, openDialog, loginGoogleUser, closeError } from './login-index';
 import axiosWrapper from '../apis/axiosCreate';
 
 const middlewares = [thunk]
@@ -44,17 +44,17 @@ describe('Login_Actions', () => {
         await response(dispatch);
     });
     it('should handle loginUser action', async () => {
-        const user = [{
+        const user = {
             email: 'test@test.com',
             password: 'sasa'
-        }];
-        axiosWrapper.get = jest.fn().mockImplementation(() => Promise.resolve({data: user}));
+        };
+        axiosWrapper.get = jest.fn().mockImplementation(() => Promise.resolve({data: [user]}));
         const dispatch = jest.fn().mockImplementation();
         const response = loginUser(user);
         await response(dispatch);
         expect(dispatch).toHaveBeenCalledWith({
             type: LOGIN_USER_DETAILS,
-            payload: {data: user}
+            payload: user
         });
     }); 
     it('should handle loginUser action throw error', async () => {
@@ -78,6 +78,13 @@ describe('Login_Actions', () => {
         expect(store.getActions()[0]).toEqual({
             type: LOGIN_USER_DETAILS,
             payload: 'login'
+        });
+    });
+    it('should handle closeError action', async () => { 
+        store.dispatch(closeError());
+        expect(store.getActions()[0]).toEqual({
+            type: CLOSE_ERROR,
+            payload: false
         });
     });
 });

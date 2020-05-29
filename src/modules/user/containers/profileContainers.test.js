@@ -16,7 +16,9 @@ describe('ProfileContainer_Component', () => {
     let wrapper, store;
     const props = {
         isLoggedIn: true,
-        detailsObject: 'detailsObject',
+        detailsObject: {
+            id: 1
+        },
         user: {
             balance_points: 23
         },
@@ -26,7 +28,9 @@ describe('ProfileContainer_Component', () => {
     store = mockStore({
         login: {
             loginStatus: true,
-            detailsObject: 'detailsObject'
+            detailsObject: {
+                id: 1
+            }
         },
         users: jest.fn()
     });
@@ -45,7 +49,9 @@ describe('ProfileContainer_Component', () => {
         history.push('/profile')
         const props1 = {
             isLoggedIn: false,
-            detailsObject: 'detailsObject',
+            detailsObject: {
+                id: 1
+            },
             user: {
                 balance_points: 23
             },

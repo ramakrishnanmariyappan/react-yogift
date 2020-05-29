@@ -7,6 +7,7 @@ import history from "./common/components/history";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { LocalizeProvider } from "react-localize-redux";
 import ErrorBoundary from "./common/components/errorBoundary";
+import { connect } from "react-redux";
 
 function Loading({ error }) {
   if (error) {
@@ -40,19 +41,23 @@ export const ErrorPage = lazy(() => import('./common/components/ErrorPage'));
 export const UsersList = lazy(() => import('./user/components/usersList'));
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state= {}
+  }
   render() {
     return (
-      // <ErrorBoundary>
+      <ErrorBoundary>
         <LocalizeProvider>
           <Header />
           <Router history={history}>
             <Suspense fallback={<Loading />}>
               <Switch>
-                <Route exact path="/giftCards/:id" render={() => <GiftShowContainer />} />
+                <Route exact path="/giftCards/:id" render={(props) => <GiftShowContainer {...props} />} />
                 <Route exact path="/giftCards" render={() => <GiftsListContainer />} />
                 <Route exact path="/Profile" render={() => <ProfileContainers />} />
                 <Route exact path="/GiftsSend" render={() => <GiftsSendContainer />} />
-                <Route exact path="/UsersList" render={() => <UsersList />} />
+                <Route exact path="/UsersList" render={() => <UsersList />} />)
                 <Route
                   exact
                   path="/GiftsReceived"
@@ -68,9 +73,14 @@ class App extends Component {
           </Router>
           <Footer />
         </LocalizeProvider>
-      // </ErrorBoundary>
+       </ErrorBoundary>
     );
   }
 }
-
-export default App
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.login.loginStatus,
+    userDetails: state.login.detailsObject
+  };
+};
+export default connect(mapStateToProps,null)(App)

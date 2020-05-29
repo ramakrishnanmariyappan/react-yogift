@@ -19,11 +19,11 @@ export default function LoginFormikComponent(props) {
         dispatch(loginGoogleUser(res.profileObj));
     }
     const responseGoogle = (res) => {
-        console.log('failure')
+        // console.log('failure')
+        props.errorData(true);
     }
     return (
         <div>
-
             <Formik
                 initialValues={{ email: '', password: '' }}
                 validate={values => {
@@ -112,7 +112,11 @@ export default function LoginFormikComponent(props) {
                                     />
                                 </Grid>
                             </Grid>
-                            <Button onClick={handleClose} color="primary">
+							<Grid container>
+							<Grid item xs={12} sm={8}>
+							</Grid>
+							<Grid item xs={12}sm={4}>
+							<Button onClick={handleClose} color="primary">
                                 Cancel
                                             </Button>
                             <Button
@@ -122,6 +126,9 @@ export default function LoginFormikComponent(props) {
                                 color="primary">
                                 Login
                                             </Button>
+							</Grid>
+							</Grid>
+                            
                         </form>
                     )}
             </Formik>

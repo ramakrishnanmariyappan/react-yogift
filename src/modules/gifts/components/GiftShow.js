@@ -4,10 +4,11 @@ import Grid from "@material-ui/core/Grid";
 import { DateFormatter } from "./../../common/components/DateFormatter";
 import StarRatingComponent from "react-star-rating-component";
 import SendGiftCardDialog from "../../common/components/DraggableDialog";
+import logger from '../../common/components/logger';
 
 const GiftShow = props => {
   const { data } = props;
-
+  logger.push(`Clicked on vendor: ${data.cardVendor}`);
   return (
     <div style={{ padding: "4%" }}>
       <div className={Styles.detailsPage}>

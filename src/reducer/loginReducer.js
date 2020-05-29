@@ -1,9 +1,10 @@
-import { LOGIN, LOGOUT, LOGIN_USER_DETAILS, OPEN_DIALOG } from "../actions/login-types";
+import { LOGIN, LOGOUT, LOGIN_USER_DETAILS, OPEN_DIALOG, LOGIN_ERROR, CLOSE_ERROR } from "../actions/login-types";
 
 const INITIAL_STATE = {
   loginStatus: false,
   detailsObject: '',
-  openDialog: false
+  openDialog: false,
+  errorData: false
 }
 const loginReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
@@ -33,6 +34,19 @@ const loginReducer = (state = INITIAL_STATE, action) => {
         loginStatus: false,
         detailsObject: {}
       };
+      break;
+
+    case LOGIN_ERROR:
+      state = {
+        ...state,
+        errorData: action.payload
+      }
+      break;
+    case CLOSE_ERROR:
+      state = {
+        ...state,
+        errorData: action.payload
+      }
       break;
 
     default:

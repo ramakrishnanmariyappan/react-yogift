@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
-import log from 'loglevel';
-import remote from 'loglevel-plugin-remote';
-
-const customJSON = log => ({
-msg: log.message,
-level: log.level.label,
-stacktrace: log.stacktrace
-});
-
-remote.apply(log, { format: customJSON, url: '/logger' });
-log.enableAll();
+import logger from './logger';
 
 class ErrorBoundary extends Component {
  constructor(props) {
   super(props);
-  this.state = { hasError: false };
+this.state = { hasError: false };
 }
 
 static getDerivedStateFromError(error) {
@@ -23,18 +13,18 @@ static getDerivedStateFromError(error) {
 }
 
 componentDidCatch(error, info) {
-  // log the error to our server with loglevel
-  log.error({ error, info });
+  // log the error to loggly
+  logger.push({ error, info });
 }
 
 render() {
- if (this.state.hasError) {
+if (this.state.hasError) {
   // You can render any custom fallback UI
   return <h1>Something went wrong.</h1>;
  }
 
  return this.props.children;
-}
+ }
 }
 
 export default ErrorBoundary;

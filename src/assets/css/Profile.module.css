@@ -1,7 +1,7 @@
 .profileHeader {
     min-height: 25%;
     width: 100%;
-    background-color: aqua;
+    background-image: url('../images/ProfileImage.jpg');
     object-fit: cover;
 }
 

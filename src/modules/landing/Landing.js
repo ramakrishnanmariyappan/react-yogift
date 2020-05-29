@@ -1,22 +1,10 @@
 import React, { Component } from 'react';
-import Styles from '../../assets/css/Landing.module.css';
 import Button from '@material-ui/core/Button';
-import OverlayImg from '../../assets/images/overLay.jpg';
-import amazon from '../../assets/images/amazon.jpg';
-import flipkart from '../../assets/images/flipkart.jpg';
-import foodmarket from '../../assets/images/foodmarket.jpg';
-import ebay from '../../assets/images/ebay.jpg';
-import zomoto from '../../assets/images/zomoto.jpg';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
+import Styles from '../../assets/css/Landing.module.css';
 
 class Landing extends Component {
-  constructor(props){
-    super(props);
-    this.state={
-      highResImageLoaded: false,
-    }
-  }
  
   render() {
     return (
@@ -34,45 +22,20 @@ class Landing extends Component {
                 <p>YoYo makes it easy for you to give the perfect gift card</p>
                 <p>and conveniently manage them from any device!!</p>
               </div>
-              <Link to="/giftCards" onClick={this.handleClick} className={Styles.cardsBtn}>
+              <Link to="/giftCards" className={Styles.cardsBtn}>
                 <Button variant="contained">
                   Explore Cards
                 </Button>
               </Link>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <img
-                className={Styles.GiftImg}
-                src={OverlayImg}
-                alt="YoYoImg"
-              />
+			<div className={Styles.GiftImg} alt="YoYoImg"></div>
             </Grid>
           </Grid>
         </div>
         <div className={Styles.vendors}>
           <h2 className={Styles.vendorTitle}>Buy Gift Cards from your favourite Vendors</h2>
-          <div style={{ textAlign: 'center' }}>
-            <div className={Styles.vendorContainer}>
-              <img className={Styles.vendorImage} src={foodmarket} alt="whole food market" />
-              <p className={Styles.vendorName}>Whole Foods Market</p>
-            </div>
-            <div className={Styles.vendorContainer}>
-              <img className={Styles.vendorImage} src={ebay} alt="Ebay" />
-              <p className={Styles.vendorName}>Ebay</p>
-            </div>
-            <div className={Styles.vendorContainer}>
-              <img className={Styles.vendorImage} src={amazon} alt="amazon" />
-              <p className={Styles.vendorName}>Amazon</p>
-            </div>
-            <div className={Styles.vendorContainer}>
-              <img className={Styles.vendorImage} src={flipkart} alt="Flipkart" />
-              <p className={Styles.vendorName}>Flipkart</p>
-            </div>
-            <div className={Styles.vendorContainer}>
-              <img className={Styles.vendorImage} src={zomoto} alt="Zomato" />
-              <p className={Styles.vendorName}>Zomato</p>
-            </div>
-          </div>
+			 
         </div>
       </div>
     )

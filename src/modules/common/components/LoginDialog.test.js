@@ -12,12 +12,13 @@ describe('LoginDialog_Component', () => {
     let wrapper, store;
     const props = {
         openDialog: jest.fn(),
-        loginUser: jest.fn()
+        loginUser: jest.fn(),
+        closeError: jest.fn()
     }
     const mockStore = configureStore([thunk]);
     store = mockStore({});
     useDispatch.mockImplementation(() => store.dispatch);
-    useSelector.mockImplementation((selectorFn) => selectorFn({ login: { openDialog: true } }));
+    useSelector.mockImplementation((selectorFn) => selectorFn({ login: { openDialog: true, errorData: true } }));
     beforeEach(() => {
         const historyMock = { push: jest.fn(), location: { path: '/UsersList' } };
         wrapper = mount(
@@ -39,5 +40,13 @@ describe('LoginDialog_Component', () => {
         wrapper.update();
         form.props().dialogClose();
         expect(spy).toHaveBeenCalled();
+    });
+    it('should call login error', () => {
+        wrapper.setState({error: true})
+        wrapper.update();
+    });
+    it('should call login errorValue', () => {
+        useSelector.mockImplementation((selectorFn) => selectorFn({ login: { openDialog: true, errorData: false } }));
+        wrapper.update();
     });
 })
