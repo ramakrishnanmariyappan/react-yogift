@@ -35,7 +35,28 @@ class Landing extends Component {
         </div>
         <div className={Styles.vendors}>
           <h2 className={Styles.vendorTitle}>Buy Gift Cards from your favourite Vendors</h2>
-			 
+			 <div style={{ textAlign: 'center' }}>
+            <div className={Styles.vendorContainer}>
+              <div className={Styles.vendorImage1} alt="whole food market"></div>
+              <p className={Styles.vendorName}>Whole Foods Market</p>
+            </div>
+            <div className={Styles.vendorContainer}>
+              <div className={Styles.vendorImage2} alt="Ebay" ></div>
+              <p className={Styles.vendorName}>Ebay</p>
+            </div>
+            <div className={Styles.vendorContainer}>
+              <div className={Styles.vendorImage3} alt="amazon" ></div>
+              <p className={Styles.vendorName}>Amazon</p>
+            </div>
+            <div className={Styles.vendorContainer}>
+              <div className={Styles.vendorImage4} alt="Flipkart" ></div>
+              <p className={Styles.vendorName}>Flipkart</p>
+            </div>
+            <div className={Styles.vendorContainer}>
+              <div className={Styles.vendorImage5} alt="Zomato" ></div>
+              <p className={Styles.vendorName}>Zomato</p>
+            </div>
+			  </div>
         </div>
       </div>
     )

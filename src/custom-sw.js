@@ -8,5 +8,33 @@ self.addEventListener('activate', event => event.waitUntil(self.clients.claim())
 workbox.precaching.precacheAndRoute(self.__precacheManifest);
 workbox.precaching.precacheAndRoute(['/'])
 workbox.precaching.precacheAndRoute(['/giftCards'])
+workbox.precaching.precacheAndRoute(['/UsersList'])
 // app-shell
 workbox.routing.registerRoute("/", workbox.strategies.networkFirst());
+ // Image caching
+    workbox.routing.registerRoute(
+      /\.(?:png|gif|jpg|jpeg|svg)$/,
+      workbox.strategies.cacheFirst({
+        cacheName: "images",
+        plugins: [
+          new workbox.expiration.Plugin({
+            maxEntries: 60,
+            maxAgeSeconds: 30 * 24 * 60 * 60, // 30 Days
+          }),
+        ],
+      })
+    );
+
+    // JS, CSS caching
+    workbox.routing.registerRoute(
+      /\.(?:js|=css)$/,
+      workbox.strategies.staleWhileRevalidate({
+        cacheName: "static-resources",
+        plugins: [
+          new workbox.expiration.Plugin({
+            maxEntries: 60,
+            maxAgeSeconds: 20 * 24 * 60 * 60, // 20 Days
+          }),
+        ],
+      })
+    );
