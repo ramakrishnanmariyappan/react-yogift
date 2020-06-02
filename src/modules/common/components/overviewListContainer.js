@@ -22,6 +22,7 @@ class OverviewListContainer extends React.PureComponent {
 
   render() {
     let filteredValue = [];
+	console.log(this.props.debonceData);
     if(this.props.debonceData !== ''){
       filteredValue = this.props.giftCardsFiltered.filter(gift =>
         gift.cardName.toLowerCase().includes(this.props.debonceData.toLowerCase()) ||

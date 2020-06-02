@@ -42,7 +42,9 @@ describe('LoginDialog_Component', () => {
         expect(spy).toHaveBeenCalled();
     });
     it('should call login error', () => {
-        wrapper.setState({error: true})
+		const form = wrapper.find('LoginFormikComponent').at(0);
+		console.log(form.debug());
+		form.props().errorData({error: true});
         wrapper.update();
     });
     it('should call login errorValue', () => {

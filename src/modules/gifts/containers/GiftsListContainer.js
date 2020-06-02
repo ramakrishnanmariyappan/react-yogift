@@ -54,6 +54,7 @@ export class GiftsListContainer extends React.Component {
         value: this.state.sortByValue
       }
     }
+	console.log('coming');
     this.onChangeSort(e)
     this.setState({ sortOrder: !this.state.sortOrder });
   };
@@ -76,6 +77,7 @@ export class GiftsListContainer extends React.Component {
   };
 
   onChangeSort = e => {
+	  console.log('coming sort');
     const { sortOrder } = this.state;
     const giftCards = this.state.filterValue === 'All' ? this.props.giftCards : this.props.giftCardsFiltered;
     this.setState({
@@ -230,8 +232,7 @@ const mapStateToProps = state => {
   return {
     giftCards: state.gifts.giftCards,
     giftCardsFiltered: state.gifts.giftCardsFiltered,
-    userDetails: state.login.detailsObject,
-    debonceData: state.gifts.debonceData
+    userDetails: state.login.detailsObject
   };
 };
 

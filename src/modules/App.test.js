@@ -9,7 +9,6 @@ import { Router } from "react-router-dom";
 import history from "./common/components/history";
 import { create } from 'react-test-renderer';
 import { LocalizeProvider } from "react-localize-redux";
-import ErrorBoundary from "./common/components/errorBoundary";
 import thunk from 'redux-thunk';
 import { MemoryRouter } from 'react-router-dom';
 

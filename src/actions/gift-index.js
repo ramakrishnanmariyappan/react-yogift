@@ -48,6 +48,7 @@ export const updateCardCount = (cardId, cardCount) => async(dispatch) => {
     })
 }
 export const searchdebounceData = (value) => async(dispatch) => {
+	console.log('value', value);
     dispatch ({
         type: DEBONCE_DATA,
         payload: value

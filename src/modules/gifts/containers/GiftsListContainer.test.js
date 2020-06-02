@@ -1,11 +1,13 @@
 import React from 'react';
 import { GiftsListContainer } from './GiftsListContainer';
 import Adapter from 'enzyme-adapter-react-16';
-import { Provider } from 'react-redux';
+import { useSelector, useDispatch, Provider } from 'react-redux';
 import configureStore from 'redux-mock-store'
 import { mount, configure } from 'enzyme';
 import { getGiftCardData } from '../../../mockData/getMockData';
+import { searchdebounceData } from '../../../actions/gift-index';
 import thunk from 'redux-thunk';
+import { debounce } from 'throttle-debounce';
 
 const userDetails = {
     "id": 1,
@@ -19,12 +21,7 @@ const error = { message: "some error" };
 const errorResponse = () => Promise.reject(error);
 
 describe('GiftsListContainer_Component', () => {
-    const mockDispatch = jest.fn();
-    jest.mock('react-redux', () => ({
-        useSelector: jest.fn(),
-        useDispatch: () => mockDispatch
-      }));
-    // useDispatch.mockImplementation(() => store.dispatch);
+	
     // useSelector.mockImplementation((selectorFn) => selectorFn({ gifts: { debonceData: debonceData } }));
     let wrapper, store;
     const props = {
@@ -34,8 +31,7 @@ describe('GiftsListContainer_Component', () => {
         debonceData: 'Amazon Gift',
         fetchCards: jest.fn(),
         fetchCard: jest.fn(),
-        fetchCardFilter: jest.fn(),
-        searchdebounceData: jest.fn('Amazon Gift ')
+        fetchCardFilter: jest.fn()
     }
     const mockStore = configureStore([thunk]);
     store = mockStore({
@@ -49,11 +45,9 @@ describe('GiftsListContainer_Component', () => {
         },
         fetchCards: jest.fn(),
         fetchCard: jest.fn(),
-        fetchCardFilter: jest.fn(),
-        searchdebounceData: jest.fn('Amazon Gift ')
+        fetchCardFilter: jest.fn()
     });
     beforeEach(() => {
-
         wrapper = mount(
             <Provider store={store}>
                 <GiftsListContainer {...props} />);
@@ -66,14 +60,7 @@ describe('GiftsListContainer_Component', () => {
         instance.componentDidMount();
         expect(spy).toHaveBeenCalled()
     });
-    it('should call componentDidCatch method', () => {
-        const wrapper1 = mount(<GiftsListContainer {...props} fetchCardFilter={jest.fn(() => errorResponse())} />);
-        const instance = wrapper1.instance();
-        const spy = jest.spyOn(instance, 'componentDidCatch');
-        instance.forceUpdate();
-        instance.componentDidCatch();
-        expect(spy).toHaveBeenCalled()
-    });
+    
     it('should call handleChangePage method', () => {
         const instance = wrapper.instance();
         const spy = jest.spyOn(instance, 'handleChangePage');
@@ -90,32 +77,39 @@ describe('GiftsListContainer_Component', () => {
     });
     it('should call the handleSortButtonClick with sort value=None', () => {
         const instance = wrapper.instance();
-        const button = wrapper.find('WithStyles(IconButton)').at(0);
+        const button = wrapper.find('WithStyles(IconButton)').at(1);
+		console.log('wrapper', wrapper.debug());
+		console.log('button', button.debug());
+		console.log('instance', instance);
         let spy = jest.spyOn(instance, 'onChangeSort');
+		instance.forceUpdate();
         button.props().onClick();
-        expect(spy).toHaveBeenCalled();
+		expect(spy).toHaveBeenCalled();
     });
     it('should call the handleSortButtonClick with sort value=Points', () => {
         const instance = wrapper.instance();
-        const button = wrapper.find('WithStyles(IconButton)').at(0);
+        const button = wrapper.find('WithStyles(IconButton)').at(1);
         wrapper.setState({ sortByValue: 'Points' });
         let spy = jest.spyOn(instance, 'onChangeSort');
-        button.props().onClick();
-        expect(spy).toHaveBeenCalled();
+		instance.forceUpdate();
+		button.props().onClick();
+		expect(spy).toHaveBeenCalled();
     });
     it('should call the handleSortButtonClick with sort value=Count', () => {
         const instance = wrapper.instance();
-        const button = wrapper.find('WithStyles(IconButton)').at(0);
+        const button = wrapper.find('WithStyles(IconButton)').at(1);
         wrapper.setState({ sortByValue: 'Count' });
         let spy = jest.spyOn(instance, 'onChangeSort');
+		instance.forceUpdate();
         button.props().onClick();
         expect(spy).toHaveBeenCalled();
     });
     it('should call the handleSortButtonClick with sort value=Validity', () => {
         const instance = wrapper.instance();
-        const button = wrapper.find('WithStyles(IconButton)').at(0);
+        const button = wrapper.find('WithStyles(IconButton)').at(1);
         wrapper.setState({ sortByValue: 'Validity' });
         let spy = jest.spyOn(instance, 'onChangeSort');
+		instance.forceUpdate();
         button.props().onClick();
         expect(spy).toHaveBeenCalled();
     });
@@ -123,41 +117,46 @@ describe('GiftsListContainer_Component', () => {
 
     it('should call the handleSortButtonClick with sort value=Points with sort order false', () => {
         const instance = wrapper.instance();
-        const button = wrapper.find('WithStyles(IconButton)').at(0);
+        const button = wrapper.find('WithStyles(IconButton)').at(1);
         wrapper.setState({ sortByValue: 'Points', sortOrder: false });
         let spy = jest.spyOn(instance, 'onChangeSort');
+		instance.forceUpdate();
         button.props().onClick();
         expect(spy).toHaveBeenCalled();
     });
     it('should call the handleSortButtonClick with sort value=Count with sort order false', () => {
         const instance = wrapper.instance();
-        const button = wrapper.find('WithStyles(IconButton)').at(0);
+        const button = wrapper.find('WithStyles(IconButton)').at(1);
         wrapper.setState({ sortByValue: 'Count', sortOrder: false });
         let spy = jest.spyOn(instance, 'onChangeSort');
+		instance.forceUpdate();
         button.props().onClick();
         expect(spy).toHaveBeenCalled();
     });
     it('should call the handleSortButtonClick with sort value=Validity with sort order false', () => {
         const instance = wrapper.instance();
-        const button = wrapper.find('WithStyles(IconButton)').at(0);
+        const button = wrapper.find('WithStyles(IconButton)').at(1);
         wrapper.setState({ sortByValue: 'Validity', sortOrder: false });
         let spy = jest.spyOn(instance, 'onChangeSort');
+		instance.forceUpdate();
         button.props().onClick();
         expect(spy).toHaveBeenCalled();
     });
     it('should call the handleSortButtonClick with sort value=Validity with sort order false with filtervalue !All', () => {
         const instance = wrapper.instance();
-        const button = wrapper.find('WithStyles(IconButton)').at(0);
+        const button = wrapper.find('WithStyles(IconButton)').at(1);
         wrapper.setState({ sortByValue: 'Validity', sortOrder: false, filterValue: '' });
         let spy = jest.spyOn(instance, 'onChangeSort');
+		instance.forceUpdate();
         button.props().onClick();
         expect(spy).toHaveBeenCalled();
     });
     it('should call the handleSortButtonClick with sort value=val with sort order false with filtervalue !All', () => {
         const instance = wrapper.instance();
-        const button = wrapper.find('WithStyles(IconButton)').at(0);
+        const button = wrapper.find('WithStyles(IconButton)').at(1);
         wrapper.setState({ sortByValue: 'val', sortOrder: false, filterValue: '' });
         let spy = jest.spyOn(instance, 'onChangeSort');
+		instance.forceUpdate();
         button.props().onClick();
         expect(spy).toHaveBeenCalled();
     });
@@ -172,5 +171,13 @@ describe('GiftsListContainer_Component', () => {
         const button = wrapper.find('WithStyles(WithFormControlContext(Select))').at(0);
         button.props().onChange({ "target": { "value": "Val" } });
         expect(instance.state.filterValue).toEqual('Val');
+    });
+	it('should call componentDidCatch method', () => {
+        const wrapper1 = mount(<GiftsListContainer {...props} fetchCardFilter={jest.fn(() => errorResponse())} />);
+        const instance = wrapper1.instance();
+        const spy = jest.spyOn(instance, 'componentDidCatch');
+        instance.forceUpdate();
+        instance.componentDidCatch();
+        expect(spy).toHaveBeenCalled()
     });
 });

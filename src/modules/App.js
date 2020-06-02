@@ -6,7 +6,6 @@ import Landing from "./landing/Landing";
 import history from "./common/components/history";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { LocalizeProvider } from "react-localize-redux";
-import ErrorBoundary from "./common/components/errorBoundary";
 import { connect } from "react-redux";
 
 function Loading({ error }) {
@@ -47,7 +46,6 @@ class App extends Component {
   }
   render() {
     return (
-      <ErrorBoundary>
         <LocalizeProvider>
           <Header />
           <Router history={history}>
@@ -73,7 +71,6 @@ class App extends Component {
           </Router>
           <Footer />
         </LocalizeProvider>
-       </ErrorBoundary>
     );
   }
 }

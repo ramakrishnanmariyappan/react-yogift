@@ -43,7 +43,9 @@
       "!<rootDir>/src/custom-sw.js",
 	  "!<rootDir>/src/store/index.js",
 	  "!<rootDir>/src/shared/consts/array-consts.js",
-	  "!<rootDir>/src/modules/common/utility/Random_rgba.js"
+	  "!<rootDir>/src/modules/common/utility/Random_rgba.js",
+	  "!<rootDir>/src/modules/common/components/VirtualDom.js",
+	  "!<rootDir>/src/modules/App.js"
     ],
     "coverageReporters": [
       "text",

@@ -21,18 +21,23 @@ const UsersDetails = [{
     "email": "sebastian@mindtree.com",
     "balance_points": 150
 }];
+const userDetails = {
+	email: "ram.20187@gmail.com"
+}
 configure({ adapter: new Adapter() });
 jest.mock('react-redux');
 describe('UsersList_Component', () => {
     let wrapper, store, useEffect;
     const props = {
         UsersDetails: UsersDetails,
-        usersDetails: jest.fn()
+        usersDetails: jest.fn(),
+		userDetails: userDetails,
+		isLoggedIn: true
     }
     const mockStore = configureStore([thunk]);
-    store = mockStore({ users: { UsersDetails: UsersDetails } });
+    store = mockStore({ users: { UsersDetails: UsersDetails } ,login: {isLoggedIn: true, userDetails: userDetails }});
     useDispatch.mockImplementation(() => store.dispatch);
-    useSelector.mockImplementation((selectorFn) => selectorFn({ users: { UsersDetails: UsersDetails } }));
+    useSelector.mockImplementation((selectorFn) => selectorFn({ login: {isLoggedIn: true, userDetails: userDetails }, users: { UsersDetails: UsersDetails}}));
     const mockUseEffect = () => {
         useEffect.mockImplementationOnce(f => f());
     };
@@ -43,12 +48,13 @@ describe('UsersList_Component', () => {
         const historyMock = { push: jest.fn(), location: { path: '/UsersList' } };
         wrapper = mount(
             <Router store={store}>
-                <UsersList history={historyMock} {...props} />
+                <UsersList history={historyMock} />
             </Router>
         );
     });
     it("dispatch search action to store", () => {
         const actions = wrapper.instance().props.store.getState();
+		console.log(actions);
         expect(actions.users.UsersDetails.length).toEqual(2);
     });
 });
